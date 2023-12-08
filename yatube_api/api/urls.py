@@ -11,10 +11,6 @@ router.register(r'groups', GroupViewSet)
 router.register(r'posts', PostViewSet)
 router.register(r'posts/(?P<post_id>\d+)/comments',
                 CommentViewSet, basename='comment')
-# router.register(
-#     r'posts/(?P<post_id>\d+)/comments/(?P<comment_id>\d+)',
-#     CommentViewSet, basename='comment-detail',
-# )
 
 urlpatterns = [
     path('', include(router.urls)),
