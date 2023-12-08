@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, mixins
+from rest_framework import viewsets, permissions
 from django.shortcuts import get_object_or_404
 
 from posts.models import Post, Group
@@ -15,8 +15,10 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
-class GroupViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                   viewsets.GenericViewSet):
+class GroupViewSet(
+    viewsets.ReadOnlyModelViewSet,
+    viewsets.GenericViewSet
+):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (GroupOnlyGet, permissions.IsAuthenticated)
@@ -32,7 +34,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         post = self.get_post()
-        return post.comments
+        return post.comments.all()
 
     def perform_create(self, serializer):
         post = self.get_post()
