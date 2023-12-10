@@ -15,10 +15,7 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
-class GroupViewSet(
-    viewsets.ReadOnlyModelViewSet,
-    viewsets.GenericViewSet
-):
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (GroupOnlyGet, permissions.IsAuthenticated)
